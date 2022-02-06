@@ -24,7 +24,6 @@ class Settings:
         username = self._get_property('sharepoint', 'username')
         password = self._get_property('sharepoint', 'password')
         baseurl = self._get_property('sharepoint', 'baseurl')
-        export_case = self._get_property('sharepoint', 'export_case')
         return Sharepoint(username=username, password=password, baseurl=baseurl)
 
     def __get_sharepoint_notification_config(self) -> SharepointNotification:

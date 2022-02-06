@@ -4,9 +4,10 @@ import time
 
 import schedule as schedule
 
-import Settings
-from Sharepoint import Sharepoint
+from model import Settings
+from model.Sharepoint import Sharepoint
 from connector import SQLite
+from scheduler import NotificationScheduler
 
 
 def logging_setup():
@@ -27,11 +28,17 @@ def main():
     Sharepoint(cfg)
 
     logger.info(f'Setting up schedules')
-    schedule.every(cfg.sharepoint_notifikation.schedule_interval).seconds.do(job_func=critical_scheduler.main)
-
+    schedule.every(cfg.sharepoint_notifikation.schedule_interval).seconds.do(job_func=NotificationScheduler.main)
+    NotificationScheduler.main()
     while True:
+        n = schedule.idle_seconds()
+        if n is None:
+            # No more jobs
+            break
+        elif n > 0:
+            # sleep for n seconds, for when next schedule run
+            time.sleep(n)
         schedule.run_pending()
-        time.sleep(1)
 
 
 if __name__ == '__main__':
