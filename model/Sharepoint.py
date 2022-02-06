@@ -1,3 +1,6 @@
+from requests_ntlm import HttpNtlmAuth
+from shareplum.site import Version, Site
+
 class Sharepoint:
 
     def __init__(self, config: Config = None):

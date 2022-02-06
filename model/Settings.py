@@ -1,6 +1,6 @@
 from configparser import ConfigParser as cp
 
-from model.Config import Sharepoint, SharepointNotification, Db, Config
+from model.Config import Sharepoint, SharepointNotification, Config
 
 
 def create_and_get_config():
@@ -31,7 +31,7 @@ class Settings:
         critical_cases = self._get_property('sharepoint_notification', 'critical_cases')
         schedule_interval = self._get_int_property('sharepoint_notification', 'schedule_interval')
         re_notifikation_schedule = self._get_property('sharepoint_notification', 're_notifikation_schedule')
-        return SharepointNotification(critical_cases=critical_cases, schedule_interval=schedule_interval, re_notifikation_schedule=re_notifikation_schedule)
+        return SharepointNotification(critical_cases, schedule_interval, re_notifikation_schedule)
 
     def __generate_config(self) -> Config:
         share_config = self.__get_sharepoint_config()
