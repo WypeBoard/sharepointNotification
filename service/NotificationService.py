@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import List
 
-import croniter as croniter
+import croniter
 
 from model.NotificationGrouping import NotificationGrouping
 from model.Settings import Settings

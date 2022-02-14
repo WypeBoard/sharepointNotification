@@ -192,4 +192,4 @@ dmypy.json
 cython_debug/
 
 # Project ignores
-src/netcompany_toolkit/database.db
+/database.db

@@ -2,3 +2,4 @@ SharePlum~=0.5.1
 schedule~=1.1.0
 win10toast~=0.9
 setuptools~=59.4.0
+croniter~=1.2.0
