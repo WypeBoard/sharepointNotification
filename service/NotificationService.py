@@ -44,7 +44,7 @@ def calculate_next_notification(re_notifikation_schedule):
 
 def update_cases_to_open(grouping: NotificationGrouping) -> List[Notification]:
     cfg = Settings()
-    next_notification = calculate_next_notification(cfg.get_config().sharepoint_notifikation.re_notifikation_schedule)
+    next_notification = calculate_next_notification(cfg.get_config().sharepoint.re_notifikation_schedule)
     for notification in grouping.get_all_notifications():
         notification.status = NotificationStatus.OPEN
         notification.next_notification = next_notification

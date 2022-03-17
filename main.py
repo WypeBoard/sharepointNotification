@@ -28,7 +28,7 @@ def main():
     Sharepoint(cfg)
 
     logger.info(f'Setting up schedules')
-    schedule.every(cfg.sharepoint_notifikation.schedule_interval).seconds.do(job_func=NotificationScheduler.main)
+    schedule.every(cfg.sharepoint.schedule_interval).seconds.do(job_func=NotificationScheduler.main)
     NotificationScheduler.main()
     while True:
         n = schedule.idle_seconds()

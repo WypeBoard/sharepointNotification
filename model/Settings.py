@@ -1,6 +1,6 @@
 from configparser import ConfigParser as cp
 
-from model.Config import Sharepoint, SharepointNotification, Config
+from model.Config import Sharepoint, Config
 
 
 def create_and_get_config():
@@ -13,29 +13,22 @@ class Settings:
     def __init__(self, config_path: str = 'config.ini'):
         self._configparser = cp()
         self._configparser.read(config_path)
-        self._required_sections = ['sharepoint', 'sharepoint_notification', 'db']
+        self._required_sections = ['sharepoint']
         self._validate_field_population()
         self._cfg = self.__generate_config()
 
     def get_config(self):
         return self._cfg
 
-    def __get_sharepoint_config(self) -> Sharepoint:
-        username = self._get_property('sharepoint', 'username')
-        password = self._get_property('sharepoint', 'password')
-        baseurl = self._get_property('sharepoint', 'baseurl')
-        return Sharepoint(username=username, password=password, baseurl=baseurl)
-
-    def __get_sharepoint_notification_config(self) -> SharepointNotification:
-        critical_cases = self._get_property('sharepoint_notification', 'critical_cases')
-        schedule_interval = self._get_int_property('sharepoint_notification', 'schedule_interval')
-        re_notifikation_schedule = self._get_property('sharepoint_notification', 're_notifikation_schedule')
-        return SharepointNotification(critical_cases, schedule_interval, re_notifikation_schedule)
+    def __get_sharepoint_config(self, section: str) -> Sharepoint:
+        baseurl = self._get_property(section, 'baseurl')
+        critical_cases = self._get_property(section, 'critical_cases')
+        schedule_interval = self._get_int_property_min_value(section, 'schedule_interval', 120)
+        re_notifikation_schedule = self._get_property(section, 're_notifikation_schedule')
+        return Sharepoint(baseurl=baseurl, critical_cases=critical_cases, schedule_interval=schedule_interval, re_notifikation_schedule=re_notifikation_schedule)
 
     def __generate_config(self) -> Config:
-        share_config = self.__get_sharepoint_config()
-        share_notification_config = self.__get_sharepoint_notification_config()
-        return Config(share_config, share_notification_config)
+        return Config(self.__get_sharepoint_config('sharepoint'))
 
     def _validate_field_population(self) -> None:
         _sections = self._configparser.sections()
@@ -48,11 +41,12 @@ class Settings:
     def _get_property(self, section, key):
         return self._configparser.get(section, key)
 
-    def _get_int_property(self, section, key) -> int:
+    def _get_int_property_min_value(self, section, key, min_value) -> int:
         try:
-            return int(self._get_property(section, key))
+            temp_int = int(self._get_property(section, key))
+            return temp_int if temp_int > min_value else min_value
         except ValueError:
-            raise NotImplementedError(f'Værdien i sektionen: {section} med værdien {key} er ikke et hel tal')
+            raise NotImplementedError(f'value for key {key} is not an integer')
 
     def _validate_required_key(self, _section, _key, _value) -> None:
         if not _value:
