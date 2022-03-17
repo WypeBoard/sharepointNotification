@@ -14,7 +14,6 @@ def get_sharepoint_notification_description(sharepoint_notifications: List[Notif
 
 
 def main():
-    # TODO: Better name?
     logger = logging.getLogger('root')
     logger.debug(f'Critical Scheduler running..')
 
