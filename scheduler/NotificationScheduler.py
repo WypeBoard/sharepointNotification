@@ -1,7 +1,7 @@
 import logging
 from typing import List
 
-from model.NotificationGrouping import NotificationGrouping
+from model.business.NotificationGrouping import NotificationGrouping
 from model.physical.Notification import Notification
 from service import NotificationService, SharepointService, ToastService
 

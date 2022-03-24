@@ -20,9 +20,6 @@ class SQLite:
                 self.conn.commit()
             self.conn.close()
 
-    def get_cursor(self):
-        return self.conn.cursor()
-
 
 def create_database():
     with SQLite(QueryType.INSERT) as cur:

@@ -16,14 +16,14 @@
 
 <!-- Getting started -->
 ## Getting started
-To get a local copy of this repository up and running follow these steps
+After downloading the tool, in order to get the application up and running you need to do the following steps.
 
 ### Prerequisites
-This tool has been build with Python 3.10, it might be able to run an previous versions of python 3, but if any problems arise, try Python 3.10
+This tool is build and executed with Python 3.10, it might be able to run a previous versions of python 3, but if any problems arise, try Python 3.10
 - [Python 3.10](https://www.python.org/downloads/)
 
 ### Installation
-The following instructions all assume that you have an open terminal that's in the git folder
+The following instructions all assume that you have a open powershell terminal, that's in the git folder
 
 The step can be skipped, but it's recommended that you create a local environment
 

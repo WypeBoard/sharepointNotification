@@ -54,5 +54,5 @@ class NotificationGrouping:
         return toast_msg
 
     def get_toast_title(self):
-        return f'{self.get_notification_number()} number of Priority cases'
+        return f'{self.get_notification_number()} number of cases in view'
 
