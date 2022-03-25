@@ -3,8 +3,8 @@ from typing import List
 
 import croniter
 
-from model.NotificationGrouping import NotificationGrouping
-from model.Settings import Settings
+from model.business.NotificationGrouping import NotificationGrouping
+from model.business.Settings import Settings
 from model.enum.NotificationStatus import NotificationStatus
 from model.physical.Notification import Notification
 from repository import NotificationRepository

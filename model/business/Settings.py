@@ -1,6 +1,6 @@
 from configparser import ConfigParser as cp
 
-from model.Config import Sharepoint, Config
+from model.business.Config import Sharepoint, Config
 
 
 def create_and_get_config():

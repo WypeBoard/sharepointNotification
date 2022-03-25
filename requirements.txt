@@ -3,3 +3,4 @@ schedule~=1.1.0
 win10toast~=0.9
 setuptools~=59.4.0
 croniter~=1.2.0
+keyring~=23.5.0

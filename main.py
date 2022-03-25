@@ -4,10 +4,11 @@ import time
 
 import schedule as schedule
 
-from model import Settings
-from model.Sharepoint import Sharepoint
+from model.business import Settings
+from model.business.Sharepoint import Sharepoint
 from connector import SQLite
 from scheduler import NotificationScheduler
+from service import NPointService
 
 
 def logging_setup():
@@ -26,6 +27,9 @@ def main():
 
     logger.info(f'Ensuring sharepoint connection')
     Sharepoint(cfg)
+
+    logger.info(f'Checking if newer version exists')
+    NPointService.check_for_newer_version()
 
     logger.info(f'Setting up schedules')
     schedule.every(cfg.sharepoint.schedule_interval).seconds.do(job_func=NotificationScheduler.main)

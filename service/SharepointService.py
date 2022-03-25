@@ -1,6 +1,6 @@
 from typing import List
 
-from model.Sharepoint import Sharepoint
+from model.business.Sharepoint import Sharepoint
 from model.physical.Notification import Notification
 from service import NotificationService
 

@@ -1,8 +1,8 @@
 from shareplum.site import Version, Site
 
-from model.Config import Config
-from model.Credentials import Credentials
-from model.Settings import Settings
+from model.business.Config import Config
+from model.business.Credentials import Credentials
+from model.business.Settings import Settings
 
 
 def init_config():
