@@ -41,18 +41,21 @@ class NotificationGrouping:
                                                                                NotificationStatus.CLOSED)
         self.all_notifications = set(self.new_notifications + self.re_opened_notifications + self.closed_notifications)
 
-    def get_all_notifications(self):
+    def get_all_notifications(self) -> set[Notification]:
         return self.all_notifications
 
-    def get_notification_number(self):
+    def get_notification_number(self) -> int:
         return len(self.all_notifications)
 
-    def get_toast_description(self):
+    def get_toast_description(self) -> str:
         toast_msg = ''
         for toast in self.all_notifications:
             toast_msg += f'{toast.case_id} {toast.case_title}\n'
         return toast_msg
 
-    def get_toast_title(self):
+    def get_toast_title(self) -> str:
         return f'{self.get_notification_number()} number of cases in view'
+
+    def get_new_notification_number(self) -> int:
+        return len(self.new_notifications)
 

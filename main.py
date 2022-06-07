@@ -20,20 +20,20 @@ def logging_setup() -> logging.Logger:
 def main():
     logger = logging_setup()
 
-    logger.info(f'Fetching settings')
+    logger.debug(f'Fetching settings')
     cfg = Settings.create_and_get_config()
     cli = CLI()
 
-    logger.info(f'Create local database if needed')
+    logger.debug(f'Create local database if needed')
     SQLite.create_database()
 
-    logger.info(f'Ensuring sharepoint connection')
+    logger.debug(f'Ensuring sharepoint connection')
     Sharepoint(cfg)
 
-    logger.info(f'Checking if newer version exists')
+    logger.debug(f'Checking if newer version exists')
     NPointService.check_for_newer_version(cli)
 
-    logger.info(f'Setting up schedules')
+    logger.debug(f'Setting up schedules')
     schedule.every(cfg.sharepoint.schedule_interval).seconds.do(NotificationScheduler.main, cli)
     NotificationScheduler.main(cli)
     while True:

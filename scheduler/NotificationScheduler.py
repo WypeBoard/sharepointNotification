@@ -19,7 +19,6 @@ def main(ui: UI):
     logger.debug(f'Critical Scheduler running..')
     ui.display_current_time()
 
-    logger.debug(f'fetching sharepoint view data')
     sharepoint_notifications = SharepointService.get_cases_from_notification_view()
     if len(sharepoint_notifications) == 0:
         ui.display_empty_view()
