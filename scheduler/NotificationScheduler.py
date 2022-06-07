@@ -4,6 +4,7 @@ from typing import List
 from model.business.NotificationGrouping import NotificationGrouping
 from model.physical.Notification import Notification
 from service import NotificationService, SharepointService, ToastService
+from util.UI import UI
 
 
 def get_sharepoint_notification_description(sharepoint_notifications: List[Notification]):
@@ -13,24 +14,28 @@ def get_sharepoint_notification_description(sharepoint_notifications: List[Notif
     return log_string
 
 
-def main():
+def main(ui: UI):
     logger = logging.getLogger('root')
     logger.debug(f'Critical Scheduler running..')
+    ui.display_current_time()
 
     logger.debug(f'fetching sharepoint view data')
     sharepoint_notifications = SharepointService.get_cases_from_notification_view()
     if len(sharepoint_notifications) == 0:
-        logger.info(f'The view is currently empty\n')
+        ui.display_empty_view()
         return
 
-    logger.info(f'There is currently {len(sharepoint_notifications)} cases in the view')
-    logger.info(f'{get_sharepoint_notification_description(sharepoint_notifications)}')
+    logger.debug(f'There is currently {len(sharepoint_notifications)} cases in the view')
+    logger.debug(f'{get_sharepoint_notification_description(sharepoint_notifications)}')
 
     logger.debug(f'fetching database entries')
     db_notifications = NotificationService.get_all_entities()
     grouping = NotificationGrouping(sharepoint_notifications, db_notifications)
-    logger.info(f'{grouping.get_notification_number()} out of {len(sharepoint_notifications)} is being reported\n')
+    ui.display_open_cases(grouping)
+
+    logger.debug(f'{grouping.get_notification_number()} out of {len(sharepoint_notifications)} is being reported\n')
     if grouping.get_notification_number() != 0:
         toast = ToastService.create_toast(grouping)
         NotificationService.update_and_persist(db_notifications, grouping)
         ToastService.wait_for_thread_to_close(toast)
+    ui.display_current_time()
