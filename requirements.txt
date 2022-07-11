@@ -4,3 +4,4 @@ win10toast~=0.9
 setuptools~=59.4.0
 croniter~=1.2.0
 keyring~=23.5.0
+cli_formatter~=1.2.0

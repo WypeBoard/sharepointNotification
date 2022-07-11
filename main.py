@@ -9,7 +9,7 @@ from model.business.Sharepoint import Sharepoint
 from connector import SQLite
 from scheduler import NotificationScheduler
 from service import NPointService
-from util.Cli import CLI
+from util.cli.Cli import CLI
 
 
 def logging_setup() -> logging.Logger:
@@ -31,11 +31,11 @@ def main():
     Sharepoint(cfg)
 
     logger.debug(f'Checking if newer version exists')
-    NPointService.check_for_newer_version(cli)
+    #NPointService.check_for_newer_version(cli)
 
     logger.debug(f'Setting up schedules')
-    schedule.every(cfg.sharepoint.schedule_interval).seconds.do(NotificationScheduler.main, cli)
-    NotificationScheduler.main(cli)
+    schedule.every(cfg.sharepoint.schedule_interval).seconds.do(NotificationScheduler.main, cli, cfg)
+    NotificationScheduler.main(cli, cfg)
     while True:
         n = schedule.idle_seconds()
         if n is None:

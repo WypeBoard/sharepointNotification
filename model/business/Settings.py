@@ -22,10 +22,22 @@ class Settings:
 
     def __get_sharepoint_config(self, section: str) -> Sharepoint:
         baseurl = self._get_property(section, 'baseurl')
-        critical_cases = self._get_property(section, 'critical_cases')
+        view_name = self._get_property(section, 'view_name')
+        terminal_fields = self.__get_field_values_added_mandatory_fields(section, 'terminal_fields')
+        toast_fields = self.__get_field_values_added_mandatory_fields(section, 'toast_fields')
         schedule_interval = self._get_int_property_min_value(section, 'schedule_interval', 120)
         re_notifikation_schedule = self._get_property(section, 're_notifikation_schedule')
-        return Sharepoint(baseurl=baseurl, critical_cases=critical_cases, schedule_interval=schedule_interval, re_notifikation_schedule=re_notifikation_schedule)
+        return Sharepoint(baseurl=baseurl, view_name=view_name, schedule_interval=schedule_interval, re_notifikation_schedule=re_notifikation_schedule
+                          , terminal_fields=terminal_fields, toast_fields=toast_fields)
+
+    def __get_field_values_added_mandatory_fields(self, section: str, section_property: str):
+        mandatory_fields = ['Case Id', 'Title']
+        loaded_fields = [item.strip() for item in self._get_property(section, section_property).split(',')]
+        for item in mandatory_fields:
+            if item in loaded_fields:
+                continue
+            loaded_fields.append(item)
+        return loaded_fields
 
     def __generate_config(self) -> Config:
         return Config(self.__get_sharepoint_config('sharepoint'))

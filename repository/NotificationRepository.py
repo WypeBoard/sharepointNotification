@@ -1,7 +1,9 @@
 from typing import List
 
 from connector import DbConnector
+from model.enum.NotificationStatus import NotificationStatus
 from model.physical.Notification import Notification
+from util import TimeFactory
 
 
 def _update_entity(notification: Notification):
@@ -31,7 +33,10 @@ def persist_entity(notification: Notification):
 def get_all_entities() -> List[Notification]:
     query = 'SELECT nf.* FROM NOTIFICATION nf'
     query_result = DbConnector.fetch_entities(query, ())
-    data = []
-    for result in query_result:
-        data.append(Notification.map_from_db(result))
-    return data
+    return [Notification.map_from_db(data) for data in query_result]
+
+
+def close_notifications_collection(closed_entries_ids: list[str]) -> None:
+    query = 'UPDATE NOTIFICATION SET STATUS = ?, AENDRET = ?, AENDRET_AF = ? WHERE ID IN (?)'
+    params = (NotificationStatus.CLOSED.name, TimeFactory.get_datetime(), 'SYSTEM', ','.join(closed_entries_ids))
+    DbConnector.persist_entity(query, params)
