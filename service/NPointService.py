@@ -1,16 +1,19 @@
 from model import Constants
+from model.business.Changelog import Changelog, ChangelogVersion
+from model.business.NPonitIO import ChangelogRevision
 from repository import NPointRepository
+from util.UI import UI
 
 
-def check_for_newer_version() -> None:
+def changelog_of_current_version() -> ChangelogRevision:
+    return ChangelogRevision(version=Constants.CURRENT_VERSION, message='')
+
+
+def check_for_newer_version(ui: UI) -> None:
     np_point = NPointRepository.get_npoint_data()
-    up_to_date = np_point.version == Constants.CURRENT_VERSION
-    if not up_to_date:
-        print(f'Current version is {Constants.CURRENT_VERSION}, newest version is {np_point.version}')
-        # TODO. Det her er ikke specielt godt. Men works for now
-        print('***************************')
-        print('* Newer version available *')
-        print('***************************')
-        print('* Changes * ')
-        print(np_point.changelog)
-        print('\n\n')
+    current_version = changelog_of_current_version()
+    newer_versions = Changelog()
+    for changelog in np_point.changelog:
+        if changelog > current_version:
+            newer_versions.logs.append(ChangelogVersion(version=changelog.version, message=changelog.message))
+    ui.display_change_log(newer_versions)

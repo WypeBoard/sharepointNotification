@@ -18,3 +18,14 @@ def from_database_datetime(date_time_str: str) -> datetime:
         raise RuntimeError
     return datetime.fromisoformat(date_time_str).replace(microsecond=0)
 
+
+def get_gui_date() -> str:
+    return get_date().strftime('%d-%m-%Y')
+
+
+def get_gui_datetime() -> str:
+    return get_datetime().strftime('%d-%m-%Y %T')
+
+
+def to_gui_date(date_time: datetime = get_datetime()) -> str:
+    return date_time.strftime('%d-%m-%Y')

@@ -2,5 +2,5 @@ from enum import Enum, auto
 
 
 class NotificationStatus(Enum):
-    OPEN = auto
-    CLOSED = auto
+    OPEN = auto()
+    CLOSED = auto()

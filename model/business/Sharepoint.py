@@ -16,7 +16,7 @@ class Sharepoint:
         if config is None:
             config = init_config()
         cred = Credentials('python_sharepoint_application')
-        self.critical_case_view = config.sharepoint.critical_cases
+        self.critical_case_view = config.sharepoint.view_name
         self.site = Site(config.sharepoint.baseurl, version=Version.v365, auth=cred.get_auth_creadentials())
 
     def get_critical_case_view(self) -> list:
