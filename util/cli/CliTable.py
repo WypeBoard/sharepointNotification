@@ -72,9 +72,9 @@ class CliTable:
 
     def _print_empty(self):
         number_of_chars = self.get_ui_length() - 4
-        print('# ')
-        print(f'The view is currently empty'.rjust(number_of_chars))
-        print(' #')
+        print('# ', end='')
+        print(f'The view is currently empty'.center(number_of_chars), end='')
+        print(' #',)
         self._seperator_line()
 
     def _print_header(self):
